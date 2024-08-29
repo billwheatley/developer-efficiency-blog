@@ -1,0 +1,11 @@
+bill_wheatley:
+  name: Bill Wheatley
+  bio: TODO
+  picture: /assets/bill-hs.png
+  links:
+    - title: Linkedin
+      url: https://www.linkedin.com/in/bill-wheatley/
+      icon: fab fa-linkedin
+    - title: GitHub
+      url: https://github.com/billwheatley/
+      icon: fab fa-github-square
