@@ -6,6 +6,8 @@ date:   2024-10-30 00:00:00 -0500
 tags: 
   - devops
   - funding
+  - metrics
+  - value streams
 image:
   thumbnail: /assets/funding-devops-banner.jpg
   path: /assets/funding-devops-banner.jpg
@@ -84,7 +86,32 @@ The best way to look at it is through a profit center lens. What are you bringin
 
 ### Mythical Man Hours
 
-TODO
+One of the pervasive problem is the sometimes dubbed the "Mythical Man Hour" this is when a task is reduced to an estimate of hours that can be completed by anyone (or at least someone within a give role).  These estimates often turn into commitments, which turn into expectations that are expected to be met. Friction ensues when things take too long. This has a direct relationship to funding since time is money, employees expect work for a fixed number of hours and for a fixed salary.  Time overruns turn into budget overruns.
+
+Before I talk about what is wrong with this line of thinking, lets talk about what is right?  Business do need some idea of how much something will cost in order to decide if something is worth investing in. Just winging it is very risky. Much of the cost is labor and an hours estimate is very useful in that calculation.
+
+The problem is with saying it will take X hours is several fold:
+
+* **Everyone works at the same pace at all times** It takes a mechanistic view of people it assumes any person with given skill set (ex: developer) can be plugged in and can complete the same task in the same amount of time.  This is often wrong for several reason:
+
+  * Not everyone has the same level of industry experience
+  * Not everyone has the same experience working within the company culture or what has been built at this specific company
+  * Not everyone is as motivated as the person sitting next to them, there are many reason for this
+  * Some people get distracted easier or are spread thinner and have context switching happening. For example: 15 min heads down, an interruption comes in, then another 30 min heads down, another interruption comes, followed by 15 min of work is a total of 1 hrs worth of work but it will likely be much less productive as 1 hr of uninterrupted work
+* **Infinite divisibility of labor:** if there is 1000 hrs of developer work it would seem like 2 developers could get that done in 500 hrs each.  It would also seem like 10 developers could get the work done in 100 hrs each. Likewise 100 developers can get it done in 10 hrs each, right? The simple divisibility mindset has several problems:
+  * Somethings require waiting on things that are not labor related.  The joke is: *if 1 women can make 1 baby in 9 months, then 9 women can make 1 baby in 1 month*. If the team is waiting on something and goes idol waiting, the more people you have, the more wasted hours.  Planning doesn't always mitigate this, surprises happen.
+  * Dependencies - in order to start working on one thing a prerequisite within the team may have to be met, the more bodies you have the more moving parts and some may have to wait, burning hours.
+  * "Too many cooks in the kitchen" vs "not enough cooks in the kitchen" If you have too few people, sometimes you don't get the best results because their are not enough people to bounce ideas off of. On the other hand too many people and you have many competing visions and you may spend a bunch hashing out the best ideas and sometimes that is not always worth the extra time.
+  * Learning the business domain and the technology as its implemented and how it's evolving thought the project is something everyone will have to go through and its more of a constant per person cost.
+
+How best to approach this:
+
+* Don't treat estimates as something you have to hit, this is not construction, that model (waterfall) doesn't work well with this type of work.
+* Embrace the agile mindset: have a vision so you have a direction but be flexible as to how it turns out.  Remember a change in direction is usually for the better since you know more than when you started
+* Deliver in small increments so you can benefit sooner rather then later from what you have done and most importnantly get real world feedback.  This will also get you out of the all-or-nothing mindset or rigidness of the original plan.
+* Measure how far you have come with what has been delivered
+* Estimate and re-estimate small future changes based on what you know. Small changes are usually more accurate. Decide what works best now.
+* Remember its a journey not a destination.
 
 ### Failures are Always a Waste of Money
 
@@ -102,7 +129,7 @@ Keep in mind it's a learning process and that's true even for experienced develo
 
 ### Only Business Features Make Money
 
-The idea here is that customers are only here for business  features. This it's the business feature that will make money. More business features means more money so much of the funding goes not developers adding business features.
+The idea here is that customers are only here for business  features. This it's the business feature that will make money. More business features means more money, thus much of the funding goes to developers adding business features.
 
 The problem with this type of funding is this ignores a couple other types of work, mainly:
 
@@ -111,11 +138,11 @@ The problem with this type of funding is this ignores a couple other types of wo
 
 #### Performance and Reliability
 
- It's one thing that you've functionally met requirements. It's another thing if the system is up.  Systems that are down, when they are needed, don't generally make as much money as systems that are up.
- 
- Then there is the problem of performance if it's noticeable to the user they may become frustrated and look elsewhere at your competition that can build a better system.
+It's one thing that you've functionally met requirements. It's another thing if the system is up.  Systems that are down, when they are needed, don't generally make as much money as systems that are up.
 
- Then there is backend efficiency sometimes it may perform well for the user but you had to throw an unnecessary of hardware and infrastructure at it.  That increases operation costs that could be brought down by investing in development of more efficient code.
+Then there is the problem of performance if it's noticeable to the user they may become frustrated and look elsewhere at your competition that can build a better system.
+
+Then there is backend efficiency sometimes it may perform well for the user but you had to throw an unnecessary of hardware and infrastructure at it.  That increases operation costs that could be brought down by investing in development of more efficient code.
 
 This is a place there Sight Reliability Engineers (SREs) could be a focus.  SREs are dedicated to partially the operational side along with the Performance and Reliability side of coding.  This model is an alternative for the traditionally separate app and ops teams. They have to live with the website operationally but are empowered to change it.
 
