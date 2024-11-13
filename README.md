@@ -1,6 +1,6 @@
 # Developer Efficacy Blog
 
-Currently this is not hosted in a production environment as of yet but is expected to be launched sometime in September 2024. Production hosting details have not been finalized yet.
+Currently this is not hosted in a production environment as of yet but is expected to be launched sometime in November 2024. Production hosting details have not been finalized yet.
 
 ## About the Blog
 
