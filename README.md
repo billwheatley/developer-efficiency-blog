@@ -69,10 +69,11 @@ DigitalOcean App Platform PAAS is used for the production environment
   * Used to edit yaml configs
   * Used to edit *So Simple* theme artifact templates in markdown and HTML.
   * Used for README.md documentation editing
-* Playing around with different markdown editors for article initial development.
-  * First Attempt **vsCode**: have done initial development of markdown articles here before but lacks grammar checking.
-  * Second Attempt **Google Docs**: Initial article development, export as Markdown, save as file in this repo, vsCode from there for final tweaking. Google Docs did some odd stuff with Markdown formatting that required me to do tedious changes to make the the markdown right for Jekyll.  If I land on this I might create a `sed` script to automatically cleanup their anti-patterns to Jekyll.
-  * Future Attempt [StackEdit](https://stackedit.io/): Thinking about trying this one sometime for initial article development. Probably copy/paste after initial development into a file in this repo, vsCode from there for final tweaking.
+* Initial article development with **Google Docs**: Initial article development
+  * After initial completion, I export as Markdown, save as file in this repo
+  * vsCode from there for final tweaking
+  * Last time I used this Google Docs did some odd stuff with Markdown formatting that required me to do tedious changes
+    * I might create a `sed` script to automatically cleanup their anti-patterns to Jekyll. If I do that it will be added to this repo.
 * `podman`: Container build and runtime CLI front end.
 * Containerized builder image
   * Dev builder artifacts are in [jekyll-builder/](./jekyll-builder/) folder.
