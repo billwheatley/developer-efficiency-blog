@@ -136,7 +136,7 @@ What I have decided to use absolute references instead, which will be invalid in
 
 The `<output dir>` will be in copied into a standard nginx container to the default html root at `/usr/share/nginx/html`.  This will make `http://<my-server>/assets/mbpm-1.png` a valid reference when running on a web server.
 
-## Building and running an instance of this blog locally
+## Building and Running an Instance of this Blog Locally
 
 ### Production Build
 
@@ -212,72 +212,6 @@ I like [Unsplash](https://unsplash.com/) for royalty free photos.
 I like [Canva](https://www.canva.com/) for royalty free editable designs (generated images)
 
 Use an image editor if you need to crop or manipulate
-
-## Why I built the blog this way?
-
-### It's wins (for me) between the alternatives
-
-Everything is comparative. I wanted to own this website and control its destiny.
-
-Building software from complete scratch doesn't sound like how I want to spend my time when plenty of already written things, so that use case is out.
-
-Using Software as a *Shared* Service such as `wordpress.com` or `blogger.com` can limit what you can do giving some amount of control and data up to the website operator which allows them to monetize you and your readers. I scratched this use case off.
-
-`substack.com` is another Software as a *Shared* Service, it seems interesting and has subscriber based monetization opportunities. In this model the operator takes a cut of subscription fees you bring in from your loyal readers. At this time I don't want to monetize in that manner but it sounds compelling.
-
-The next pattern to consider is using the WordPress software. WordPress is Open Source software and by controlling the blog at the hosting level you open more control to yourself.  There are many patterns to host this, a popular way is to get a hosting service that sets up the entire stack for you but gives you the control to configure, access backend components and change the service as you see fit. This is an extremely popular choice on the internet and my second choice behind a "Jekyll blog".
-
-The following sections explain why a Jekyll blog attracted me.
-
-### My Developer Background
-
-Anyone wanting to put together a Jekyll blog is likely going to require a developer background.  There are many ways to do it and Jekyll itself is just one of many components to having a running blog.  
-
-This type of thing is what I done professionally so it so easy for me. I end up treating the blog article like building enterprise software which to me offers a number of advantages I don't get on any of the above options.
-
-### Familiarity
-
-I have been part of a team in the past that documented our work in a Jekyll blog (or wiki as we called it).  We shoved MS Word docs and Sharepoint aside and it was glorious. To be fair I haven't used WordPress but I can imagine some of the experiences operating a blog designed the way its done and user testimonies on the Internet confirmed my concerns.
-
-### Production Efficiency and Future Costs
-
-When I think about costs for me I am mostly thinking about professional hosting, what does it cost to run this in production?
-
-Since a Jekyll blog in production is just serving up static HTML with nginx, there is relatively low cpu, memory and disk space required to that.
-
-Certainly compared to a WordPress that has to run a database, and an application to generate the HTML on the fly for every request. You could cache pages in WordPress with a plugin but that is now an additional component on top of all that.
-
-The simplicity of the Jekyll blog also creates a very reliable system and fast response times for the user. The compute per request has to be dramatically lower compared to WordPress. When it is time to scale, which should come later with Jekyll, its both vertically and horizontally scalable. With it containerized the horizontal scaling can be dynamic depending on the production runtime platform.
-
-To be fair I still have to run some compute to turn markdown into HTML but I don't need 99.99% uptime production environment to run a build.  I can run that on a much lower reliability type of environment which means lower cost. I also get the advantage of running that conversion process much less often than a WordPress site doing that on every user page load.
-
-### Runtime Security
-
-This is probably my biggest concern with self managed WordPress blogs, the security is notoriously bad. WordPress blogs are being constantly exploited.  It's a much harder model to secure as your site and much of its configuration lives in a mutable database that the front end has permissions to change. If a hacker gets in that database you could lose data, even if you have a backup, unless its a versioned backup or you catch it in time your backup might get corrupted too.
-
-The Jekyll stack I am using sources things through a series of build steps, that flows one way away from my source data in git.  In the end its dropped into an ephemeral container with no backend in production, a hacker getting into that is a container restart away from full restoration of an attack. My backend data store, git, was designed as a decentralized system and its effortless to backup `git clone ...`, not that I would have much concern to begin with GitHub security. The blog build out is automated so recreating it is also nearly effortless to restore.
-
-### Change Control and History is so Much Better
-
-With the type of setup I am using, git source control is the hub of change management and history. All the history is stored, I can branch and the tools are second to none for inspecting history and restoring, merging, reverse merging, etc.
-
-WordPress you can save drafts before you publish which only applies to the articles, other things like plugins, changes to look and feel happen in production and hopefully it looks good because any users reading your blog at the time are going to see the change when you make it. While drafts are a simple way to control changes, it is far more simplistic then git and pull requests. Once the article is published on WordPress, I am assuming there is really no history there, its just the one version. With git I have a full accounting of the history, if I was in a multi user environment this would be huge.
-
-### Ultra Portability and Replicability
-
-One thing I have seen throughout my professional life is customers that got themselves locked in and stuck somewhere. They end up being held for ransom that was craftily set at a price that is just at the right level that it would be too expense to migrate to something else. I always ask myself at the start how easy is it to walk away from any part of the system. Also what are the chances I will have to walk away?
-
-The good news is when you control who is doing the hosting, using generic patterns and use open source software you have a massive advantage over a single service provider or commercial off the shelf software.
-
-After you establish that it is possible to move hosting, to what level of effort does it take to move hosting. Here WordPress is not easy, you need to replicate plugin setup and replicate your database and chances are you don't have much practice doing this.  This Jekyll blog is ultra simple.  It's a container which has a common interface to run things. With my current setup I would also need to move CD (continues delivery) but there is not much to that. The normal flow of things with this stack makes drooping off that final container for production much easier.
-
-In addition I made sure that I control the production domain name so I could re-point it to a new hosting service if I wanted to change.
-
-Of course there is more than hosting, the software is something to consider as well. Most of this stack is pretty solid and built on commonly used things and WordPress software is pretty common too. I might give WordPress a little bit of an edge to live on longer on an as-is basis over the stack I am using but feel I have a more likely to have the opportunity of re-mixing this stack easier if something deprecates.
-
-#### A Dev (or Draft) environment
-
-Having multiple environments is a common software development practice that carries over here. I can go through an iterative process that could be simple changes to a radical remake this blog without effecting production until I am ready and everything looks good. This is due to the highly portable and replicable nature that this stack gives me. WordPress is hard to replicate across running instances. The WordPress model pushes you to work in a single environment where you have to make changes as your users are using it.
 
 ## Contacting Bill Wheatley
 
