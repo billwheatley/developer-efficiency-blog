@@ -170,7 +170,7 @@ podman rm developer-efficiency-blog
 
 ### Development Build
 
-If you want to work in an iterative manor, building and reloading quickly [see jekyll-builder/README.md](./jekyll-builder/README.md)
+If you want to work in an iterative manner, building and reloading quickly [see jekyll-builder/README.md](./jekyll-builder/README.md)
 
 ## Adding Blog Articles Guide
 
@@ -247,7 +247,7 @@ Since a Jekyll blog in production is just serving up static HTML with nginx, the
 
 Certainly compared to a WordPress that has to run a database, and an application to generate the HTML on the fly for every request. You could cache pages in WordPress with a plugin but that is now an additional component on top of all that.
 
-The simplicity of the Jekyll blog also creates a very reliable system and fast response times for the user. The compute per request has to be dramatically lower then WordPress. When it is time to scale, which should come later with Jekyll vs WordPress, its both vertically and horizontally scalable. With it containerized the horizontal scaling can be dynamic depending on the production runtime platform.
+The simplicity of the Jekyll blog also creates a very reliable system and fast response times for the user. The compute per request has to be dramatically lower compared to WordPress. When it is time to scale, which should come later with Jekyll, its both vertically and horizontally scalable. With it containerized the horizontal scaling can be dynamic depending on the production runtime platform.
 
 To be fair I still have to run some compute to turn markdown into HTML but I don't need 99.99% uptime production environment to run a build.  I can run that on a much lower reliability type of environment which means lower cost. I also get the advantage of running that conversion process much less often than a WordPress site doing that on every user page load.
 
@@ -255,7 +255,7 @@ To be fair I still have to run some compute to turn markdown into HTML but I don
 
 This is probably my biggest concern with self managed WordPress blogs, the security is notoriously bad. WordPress blogs are being constantly exploited.  It's a much harder model to secure as your site and much of its configuration lives in a mutable database that the front end has permissions to change. If a hacker gets in that database you could lose data, even if you have a backup, unless its a versioned backup or you catch it in time your backup might get corrupted too.
 
-The Jekyll stack I am using sources things through a series of build steps, that flows one way away from my source data in git.  In the end its dropped into an ephemeral container with no backend in production, a hacker getting into that is a container restart away from full restoration of an attack. My backend data store, git, was designed as a decentralized system and its effortless to backup `git clone ...` (unlike a database) not that I would have much concern to begin with GitHub security. The blog build out is automated so recreating it is also nearly effortless to restore.
+The Jekyll stack I am using sources things through a series of build steps, that flows one way away from my source data in git.  In the end its dropped into an ephemeral container with no backend in production, a hacker getting into that is a container restart away from full restoration of an attack. My backend data store, git, was designed as a decentralized system and its effortless to backup `git clone ...`, not that I would have much concern to begin with GitHub security. The blog build out is automated so recreating it is also nearly effortless to restore.
 
 ### Change Control and History is so Much Better
 
@@ -269,17 +269,13 @@ One thing I have seen throughout my professional life is customers that got them
 
 The good news is when you control who is doing the hosting and use open source software you have a massive advantage over a single service provider or commercial off the shelf software. In theory you can pick up and move hosting easily.
 
-After you establish that it is possible to move hosting, to what level of effort does it take to move hosting. Here WordPress is not easy, you need to move plugins and replicate your database and chances are you don't have much practice doing this.  This Jekyll blog is ultra simple.  It's a container which has a common interface to run things, with my current setup I would also need to move CD (continues delivery) but there is not much to that. Here the thing, its all part of the normal flow of things so I get tons of practice doing this.
+After you establish that it is possible to move hosting, to what level of effort does it take to move hosting. Here WordPress is not easy, you need to move plugins and replicate your database and chances are you don't have much practice doing this.  This Jekyll blog is ultra simple.  It's a container which has a common interface to run things, with my current setup I would also need to move CD (continues delivery) but there is not much to that.
 
-Of course there is more than hosting, the software is something to consider as well. Most of this stack is pretty solid and built on commonly used things and WordPress software is pretty common too. I might give WordPress a little bit of an edge to live on longer as-is over the stack I am using but feel I have a more likely shot of re-mixing this stack easier.
+Of course there is more than hosting, the software is something to consider as well. Most of this stack is pretty solid and built on commonly used things and WordPress software is pretty common too. I might give WordPress a little bit of an edge to live on longer as-is over the stack I am using but feel I have a more likely shot of re-mixing this stack easier if something deprecates.
 
 #### A Dev (or Draft) environment
 
 Having multiple environments is a common software development practice that carries over here. I can go through an iterative process of radically remake this blog without effecting production until I am ready. This is due to the highly portable and replicable nature that this stack gives me. WordPress is hard to replicate across running instances. This pushing you to work in a single environment where you have to make changes as your users are using it.
-
-### Potential to Change Delivery Patterns
-
-Right now my writing is ending up on a blog but given I have a flexible stack maybe I could remix to something else in the future fairly easily.  One thought was email in the future which isn't entire cutting edge, needless to say and something most other platforms already offer but I could make  a second stack and source the writing out of the git repo. However if something new comes along, there is a bit of flexibility to reuse chunks of this stack. Who knows maybe a bot of me in the Metaverse could read the text of this article to you.
 
 ## Contacting Bill Wheatley
 
