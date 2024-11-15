@@ -1,6 +1,10 @@
 # Developer Efficiency Blog
 
-This is the git backend for the [developerefficiency.com](https://developerefficiency.com/) blog this is built with [Jekyll](https://jekyllrb.com/) + [So Simple theme](https://github.com/mmistakes/so-simple-theme?tab=readme-ov-file). Running on an [nginx container](https://hub.docker.com/_/nginx) with production hosting by [DigitalOcean](https://www.digitalocean.com/).
+This is the git backend for the [developerefficiency.com](https://developerefficiency.com/) blog
+
+This is built with [Jekyll](https://jekyllrb.com/) + [So Simple theme](https://github.com/mmistakes/so-simple-theme?tab=readme-ov-file)
+
+Running on an [nginx container](https://hub.docker.com/_/nginx) with production hosting by [DigitalOcean](https://www.digitalocean.com/)
 
 ## About the Blog
 
@@ -20,7 +24,7 @@ You can read the entire article [here](https://developerefficiency.com/2024/10/3
   * Jekyll configuration
   * Jekyll build artifacts
   * So Simple Jekyll theme artifacts and customizations
-  * Backend Technical Documentation
+  * Backend technical documentation
 * **Jekyll + So Simple Theme** - For converting Markdown to static HTML artifacts
 * **Container Builder Image** - Builder Environment for running Jekyll builder
 * **Container Runtime Image** - [nginx](https://nginx.org/) web server runtime environment to serve static HTML artifacts
@@ -28,9 +32,9 @@ You can read the entire article [here](https://developerefficiency.com/2024/10/3
 
 ### Production Environment
 
-DigitalOcean App Platform PAAS Services is used for the production environment
+DigitalOcean App Platform PAAS is used for the production environment
 
-* DigitalOcean App Platform CD
+* DigitalOcean App Platform CD (Continuos delivery)
   * GitOps Methodology to build off GitHub hosted version of this Repo
     * `main` branch is production.
     * Rebuilds on any `main` branch change / push in [Bill Wheatley's developer-efficiency-blog repo](https://github.com/billwheatley/developer-efficiency-blog)
@@ -83,18 +87,131 @@ DigitalOcean App Platform PAAS Services is used for the production environment
   * The generated static site html is mounted into the nginx container where nginx can server these up.
 * Browser pointed to the local running nginx container to preview and verify look and feel.
   * Simple browser refresh (after builder is incrementally run) is all that is needed between iterations of editing to see changes.
+* GNU Image Manipulation Program (GIMP) for image editing.
 
 ## Repo Structure
 
+```console
+.                   # Root Directory of project
+├── content         # Non-generated Jekyll content
+│   ├── assets      # Images I use thought the blog
+│   ├── _data       # So-Simple Global theme configuration
+│   ├── _includes   # So-Simple artifacts, some modified
+│   ├── _layouts    # So-Simple layout artifacts, some modified
+│   └── _posts      # The blog posts
+└── jekyll-builder  # Development builder image
+```
+
 ### Jekyll and Image References in Markdown
+
+The way Jekyll assembles the static HTML and artifacts, it puts html output of `_posts` into a different directory structure then the equivalent markdown file lives in.  This makes relative references to image assets incompatible between standard markdown viewing and the compiled html website.
+
+Example, a markdown file in `content/_posts/2024-08-08-mbpm.md` might reference an image like this:
+
+```markdown
+![First mbpm](../assets/mbpm-1.png)
+```
+
+This would be valid reference to the image in the markdown given the file structure of the repo.
+
+However the Jekyll build will layout the relevant compiled assets like this:
+
+```console
+<output dir>
+├── 2024
+│   └── 08
+│       └── 08
+│           └── mbpm.html
+└── assets
+    └── mbpm-1.png
+```
+
+It does not replace the image reference. Thus the file `2024/08/08/mbpm.html` would render this html `<img src="../assets/mbpm-1.png" ...>"`, making a relative reference to an image that is invalid in this directory structure.
+
+What I have decided to use absolute references instead, which will be invalid in markdown. Other assets references that Jekyll and the *So Simple* theme add in, all use absolute references to `/assets`, so I am going with it. In markdown posts image references will look like this:
+
+```markdown
+![First mbpm](/assets/mbpm-1.png)
+```
+
+The `<output dir>` will be in copied into a standard nginx container to the default html root at `/usr/share/nginx/html`.  This will make `http://<my-server>/assets/mbpm-1.png` a valid reference when running on a web server.
 
 ## Building and running an instance of this blog locally
 
 ### Production Build
 
+This is good for testing the final container image locally that will be built by DigitalOcean App Platform CD.
+
+In the Root directory run:
+
+```console
+# Run the Build
+podman build -t developer-efficiency-blog:latest .
+
+# Once built, you run it:
+podman run -d --name developer-efficiency-blog -p 8080:80 developer-efficiency-blog:latest
+```
+
+Now you can hit http://localhost:8080 with your browser and check it out
+
+Cleaning up:
+
+```console
+# To Stop it:
+podman kill developer-efficiency-blog
+
+# To start it backup (if you like the command options from the initial run command)
+podman start developer-efficiency-blog
+
+# If you want to delete the developer-efficiency-blog run definition:
+podman kill developer-efficiency-blog
+podman rm developer-efficiency-blog
+```
+
 ### Development Build
 
-## Adding Articles Guide
+If you want to work in an iterative manor, building and reloading quickly [see jekyll-builder/README.md](./jekyll-builder/README.md)
+
+## Adding Blog Articles Guide
+
+New Articles go under `content/_posts/` directory, the file name is in the pattern `yyyy-MM-dd-my-blog-topic.md`
+
+### Jekyll Header
+
+All finalized Markdown blog files need this header, it starts at the very first line, here is a template
+
+```yaml
+---
+title: "My Pretty Print Title"
+layout: post
+author: bill_wheatley
+date:   YYYY-MM-dd 00:00:00 -0500
+tags: 
+  - Tag 1
+  - Tag 2 
+image:
+  thumbnail: /assets/my-thumbnail.png
+  path: /assets/my-blog-banner.png
+---
+```
+
+NOTES:
+
+* `author` must match an author in `content/_data/authors.yaml`
+* `date` Make sure it matches the file name
+* `tags` is a free form list but make sure they line up with exiting tabs (case sensitive), you can Always check the [website](https://developerefficiency.com/tags/) for current tags
+* `image.thumbnail` This should be used, it shows up in blog post listings, it can be a repeat of the banner image
+* `image.path` This is required, It's the banner image
+  * These can be over barring, the wider you make it relative to hight, the less ridicules it looks
+  * If you want that area to appear blank, use: `/assets/empty-wide.png` its a very wide and short blank image that will not break the page
+
+### Obtaining Stock Images
+
+I like [Unsplash](https://unsplash.com/) for royalty free photos.
+
+I like [Canva](https://www.canva.com/) for royalty free designs (generated images)
+
+Use an image editor if you need to crop or manipulate
 
 ## Why I built the blog this way?
 
@@ -104,37 +221,65 @@ Everything is comparative. I wanted to own this website and control its destiny.
 
 Building Software from complete scratch doesn't sound like how I want to spend my time when plenty of already written things, so that use case is out.
 
-Using Software as a *Shared* service such as `wordpress.com` or `blogger.com` can limit what you can do and are often free of course with any free service you probably giving some amount of control and data up to the website operator which allows them to monetize you and your readers. I scratched this use case off.
+Using Software as a *Shared* service such as `wordpress.com` or `blogger.com` can limit what you can do giving some amount of control and data up to the website operator which allows them to monetize you and your readers. I scratched this use case off.
 
 `substack.com` is another Software as a *Shared* service, it seems interesting and has subscriber based monetization opportunities. In this model the operator takes a cut of subscription fees you bring in from your loyal readers. At this time I don't want to monetize in that manner but it sounds compelling.
 
-The next pattern to consider is using the Word Press software. Word Press is Open Source software and by controlling the blog at the hosting level you open more control to yourself.  Their are many patterns to host this, a popular way is to get a hosting service that sets up the entire stack for you but gives you the control to configure, access backend components and change the service as you see fit. This is an extremely popular choice on the internet and my second choice behind a "Jekyll blog".
+The next pattern to consider is using the WordPress software. Word Press is Open Source software and by controlling the blog at the hosting level you open more control to yourself.  There are many patterns to host this, a popular way is to get a hosting service that sets up the entire stack for you but gives you the control to configure, access backend components and change the service as you see fit. This is an extremely popular choice on the internet and my second choice behind a "Jekyll blog".
 
 All of these options fell short, the following sections explain why a Jekyll blog attracted me.
 
 ### My Developer Background
 
-Putting together a Jekyll blog is likely going to require a developer background.  There are many ways to do it and Jekyll itself is just one of many components to having a running blog at the end.  
+ANyone wanting to putt together a Jekyll blog is likely going to require a developer background.  There are many ways to do it and Jekyll itself is just one of many components to having a running blog at the end.  
 
 This type of thing is what I done professionally so it so easy for me. You end up treating the blog article like building enterprise software which to me offers a number of advantages you don't get on any of the above options.
 
 ### Familiarity
 
-I have been part of a team in the past that documented our work in a Jekyll blog (or wiki as we called it).  We shoved word docs and sharepoint aside and it was glorious. To be fair I haven't used Word Press but I can imagine some of the experiences operating a blog designed the way its done and user testimonies on the Internet confirmed my concerns.
+I have been part of a team in the past that documented our work in a Jekyll blog (or wiki as we called it).  We shoved MS Word docs and Sharepoint aside and it was glorious. To be fair I haven't used WordPress but I can imagine some of the experiences operating a blog designed the way its done and user testimonies on the Internet confirmed my concerns.
 
 ### Production Efficiency and Future Costs
 
-### Change control and History is so Much Better
+When you think about costs for me I am mostly thinking about professional hosting, what does it cost to run this in production?
+
+Since a Jekyll blog in production is just serving up static HTML with nginx, there is relatively low cpu, memory and disk space required.
+
+Certainly compared to a WordPress that has to run a database, and an application to generate the HTML on the fly for every request. You could cache pages in WordPress with a plugin but that is now an additional component on top of all that.
+
+The simplicity of the Jekyll blog also creates a very reliable system and fast response times for the user. The compute per request has to be dramatically lower then WordPress. When it is time to scale, which should come later with Jekyll vs WordPress, its both vertically and horizontally scalable. With it containerized the horizontal scaling can be dynamic depending on the production runtime platform.
+
+To be fair I still have to run some compute to turn markdown into HTML but I don't need 99.99% uptime production environment to run a build.  I can run that on a much lower reliability type of environment which means lower cost. I also get the advantage of running that conversion process much less often than a WordPress site doing that on every user page load.
 
 ### Runtime Security
 
-### Ultra Portability and replicability
+This is probably my biggest concern with self managed WordPress blogs, the security is notoriously bad. WordPress blogs are being constantly exploited.  It's a much harder model to secure as your site and much of its configuration lives in a mutable database that the front end has permissions to change. If a hacker gets in that database you could lose data, even if you have a backup, unless its a versioned backup or you catch it in time your backup might get corrupted too.
 
-#### A Dev (or preview) environment
+The Jekyll stack I am using sources things through a series of build steps, that flows one way away from my source data in git.  In the end its dropped into an ephemeral container with no backend in production, a hacker getting into that is a container restart away from full restoration of an attack. My backend data store, git, was designed as a decentralized system and its effortless to backup `git clone ...` (unlike a database) not that I would have much concern to begin with GitHub security. The blog build out is automated so recreating it is also nearly effortless to restore.
 
-#### Multiple streams of development
+### Change Control and History is so Much Better
+
+With the type of setup I am using, git source control is the hub of change management and history. All the history is stored, you can branch and the tools are second to none for inspecting history and restoring, merging, reverse merging, etc.
+
+WordPress you can save drafts before you publish which only applies to the articles, other things like plugins, changes to look and feel happen in production and hopefully it looks good because any users reading your blog at the time are going to see the change when you make it.
+
+### Ultra Portability and Replicability
+
+One thing I have seen throughout my professional life is customers that got themselves locked in and stuck somewhere. They end up being held for ransom that was craftily set at a price that is too expense to migrate to something else. I always ask myself at the start how easy is it to walk away from any part of the system. Also what are the chances I will have to walk away?
+
+The good news is when you control who is doing the hosting and use open source software you have a massive advantage over a single service provider or commercial off the shelf software. In theory you can pick up and move hosting easily.
+
+After you establish that it is possible to move hosting, to what level of effort does it take to move hosting. Here WordPress is not easy, you need to move plugins and replicate your database and chances are you don't have much practice doing this.  This Jekyll blog is ultra simple.  It's a container which has a common interface to run things, with my current setup I would also need to move CD (continues delivery) but there is not much to that. Here the thing, its all part of the normal flow of things so I get tons of practice doing this.
+
+Of course there is more than hosting, the software is something to consider as well. Most of this stack is pretty solid and built on commonly used things and WordPress software is pretty common too. I might give WordPress a little bit of an edge to live on longer as-is over the stack I am using but feel I have a more likely shot of re-mixing this stack easier.
+
+#### A Dev (or Draft) environment
+
+Having multiple environments is a common software development practice that carries over here. I can go through an iterative process of radically remake this blog without effecting production until I am ready. This is due to the highly portable and replicable nature that this stack gives me. WordPress is hard to replicate across running instances. This pushing you to work in a single environment where you have to make changes as your users are using it.
 
 ### Potential to Change Delivery Patterns
+
+Right now my writing is ending up on a blog but given I have a flexible stack maybe I could remix to something else in the future fairly easily.  One thought was email in the future which isn't entire cutting edge, needless to say and something most other platforms already offer but I could make  a second stack and source the writing out of the git repo. However if something new comes along, there is a bit of flexibility to reuse chunks of this stack. Who knows maybe a bot of me in the Metaverse could read the text of this article to you.
 
 ## Contacting Bill Wheatley
 
