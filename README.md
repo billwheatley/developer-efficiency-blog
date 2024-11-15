@@ -209,7 +209,7 @@ NOTES:
 
 I like [Unsplash](https://unsplash.com/) for royalty free photos.
 
-I like [Canva](https://www.canva.com/) for royalty free designs (generated images)
+I like [Canva](https://www.canva.com/) for royalty free editable designs (generated images)
 
 Use an image editor if you need to crop or manipulate
 
