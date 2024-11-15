@@ -199,7 +199,7 @@ NOTES:
 
 * `author` must match an author in `content/_data/authors.yaml`
 * `date` Make sure it matches the file name
-* `tags` is a free form list but make sure they line up with exiting tabs (case sensitive), you can Always check the [website](https://developerefficiency.com/tags/) for current tags
+* `tags` is a free form list but make sure they line up with exiting tabs (case sensitive), check the [website](https://developerefficiency.com/tags/) for current tags to make sure you are in sync
 * `image.thumbnail` This should be used, it shows up in blog post listings, it can be a repeat of the banner image
 * `image.path` This is required, It's the banner image
   * These can be over barring, the wider you make it relative to hight, the less ridicules it looks
