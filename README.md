@@ -275,7 +275,7 @@ Of course there is more than hosting, the software is something to consider as w
 
 #### A Dev (or Draft) environment
 
-Having multiple environments is a common software development practice that carries over here. I can go through an iterative process of radically remake this blog without effecting production until I am ready. This is due to the highly portable and replicable nature that this stack gives me. WordPress is hard to replicate across running instances. This pushing you to work in a single environment where you have to make changes as your users are using it.
+Having multiple environments is a common software development practice that carries over here. I can go through an iterative process of radically remake this blog without effecting production until I am ready. This is due to the highly portable and replicable nature that this stack gives me. WordPress is hard to replicate across running instances. This pushes you to work in a single environment where you have to make changes as your users are using it.
 
 ## Contacting Bill Wheatley
 
