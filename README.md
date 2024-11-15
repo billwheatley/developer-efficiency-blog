@@ -231,7 +231,7 @@ All of these options fell short, the following sections explain why a Jekyll blo
 
 ### My Developer Background
 
-ANyone wanting to putt together a Jekyll blog is likely going to require a developer background.  There are many ways to do it and Jekyll itself is just one of many components to having a running blog at the end.  
+Anyone wanting to putt together a Jekyll blog is likely going to require a developer background.  There are many ways to do it and Jekyll itself is just one of many components to having a running blog at the end.  
 
 This type of thing is what I done professionally so it so easy for me. You end up treating the blog article like building enterprise software which to me offers a number of advantages you don't get on any of the above options.
 
