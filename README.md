@@ -56,10 +56,10 @@ DigitalOcean App Platform PAAS is used for the production environment
 
 ### Local Development and Article Writing Environment
 
-* Linux desktop (distro varies depending on which desktop I am using)
+* **Linux desktop** (distro varies depending on which desktop I am using)
   * Side Note: you can build/configure of any one of my desktop environments starting from a few select distros freshly installed and using the [provision-desktop repo](https://github.com/billwheatley/provision-desktop) to automate the build.
-* Local clone of git repo on desktop
-* vsCode for artifact editing.
+* **git repo** Locally cloned on desktop
+* **vsCode** for artifact editing.
   * Added spell check plugin
   * Unfortunately no grammar check plugins available that I can find.
   * Used for final editing of markdown articles:
@@ -69,26 +69,26 @@ DigitalOcean App Platform PAAS is used for the production environment
   * Used to edit yaml configs
   * Used to edit *So Simple* theme artifact templates in markdown and HTML.
   * Used for README.md documentation editing
-* Initial article development with **Google Docs**: Initial article development
+* **Google Docs** for Initial article development
+  * It has grammar checking
   * After initial completion, I export as Markdown, save as file in this repo
   * vsCode from there for final tweaking
   * Last time I used this Google Docs did some odd stuff with Markdown formatting that required me to do tedious changes
     * I might create a `sed` script to automatically cleanup their anti-patterns to Jekyll. If I do that it will be added to this repo.
-* `podman`: Container build and runtime CLI front end.
-* Containerized builder image
+* **podman** Container build and runtime CLI front end.
+* **Builder image** Containerized Jekyll build tool
   * Dev builder artifacts are in [jekyll-builder/](./jekyll-builder/) folder.
-  * [Builder image Dockerfile](./jekyll-builder/Dockerfile) is custom, it has the base of the theme built in.
+  * [Builder image Dockerfile](./jekyll-builder/Dockerfile) is custom, it has the base of the Jekyll theme built in.
   * No shared container repo specific to this blog (as of now).
   * Must build the *container builder* image locally to use it. Builder image is built off of common public images and libraries.
   * Similar copy/paste Dockerfile code to the builder stage of the production container image build.
   * Builder image is used as a short lived container to generate the site in static html with Jekyll.
   * The generated static site html artifacts root directory is mounted from the local file system into the build container [see jekyll-builder/README.md](./jekyll-builder/README.md)
-* Containerized nginx Runtime
+* **nginx** Containerized Web Server Runtime
   * Uses the official nginx image on docker hub w/o modifications (in dev)
   * The generated static site html is mounted into the nginx container where nginx can server these up.
-* Browser pointed to the local running nginx container to preview and verify look and feel.
-  * Simple browser refresh (after builder is incrementally run) is all that is needed between iterations of editing to see changes.
-* GNU Image Manipulation Program (GIMP) for image editing.
+* **Web Browser** points to the local running nginx container to preview and verify look and feel.
+* **GIMP** (GNU Image Manipulation Program) for image editing.
 
 ## Repo Structure
 
@@ -107,7 +107,7 @@ DigitalOcean App Platform PAAS is used for the production environment
 
 The way Jekyll assembles the static HTML and artifacts, it puts html output of `_posts` into a different directory structure then the equivalent markdown file lives in.  This makes relative references to image assets incompatible between standard markdown viewing and the compiled html website.
 
-Example, a markdown file in `content/_posts/2024-08-08-mbpm.md` might reference an image like this:
+Example: a markdown file in `content/_posts/2024-08-08-mbpm.md` might reference an image like this:
 
 ```markdown
 ![First mbpm](../assets/mbpm-1.png)
@@ -127,9 +127,9 @@ However the Jekyll build will layout the relevant compiled assets like this:
     └── mbpm-1.png
 ```
 
-It does not replace the image reference. Thus the file `2024/08/08/mbpm.html` would render this html `<img src="../assets/mbpm-1.png">`, making a relative reference to an image that is invalid in this directory structure.
+It does not replace the image reference. Thus the file `2024/08/08/mbpm.html` would render html like this: `<img src="../assets/mbpm-1.png">`. This would making that relative reference to an image invalid in this compiled directory structure.
 
-What I have decided to use absolute references instead, which will be invalid in markdown. Other assets references that Jekyll and the *So Simple* theme add in, all use absolute references to `/assets`, so I am going with it. In markdown posts image references will look like this:
+What I have decided to use absolute references instead, which will be invalid in standard markdown viewing. Other assets references that Jekyll and the *So Simple* theme add in, all use absolute references to `/assets`, so I am going with that pattern. When writing markdown posts image references should look like this:
 
 ```markdown
 ![First mbpm](/assets/mbpm-1.png)
@@ -153,7 +153,7 @@ podman build -t developer-efficiency-blog:latest .
 podman run -d --name developer-efficiency-blog -p 8080:80 developer-efficiency-blog:latest
 ```
 
-Now you can hit http://localhost:8080 with your browser and check it out
+Now you can hit [http://localhost:8080](http://localhost:8080) with your browser and check it out
 
 Cleaning up:
 
@@ -176,6 +176,8 @@ If you want to work in an iterative manner, building and reloading quickly [see 
 ## Adding Blog Articles Guide
 
 New Articles go under `content/_posts/` directory, the file name is in the pattern `yyyy-MM-dd-my-blog-topic.md`
+
+Remember the [image references issue](#jekyll-and-image-references-in-markdown) when developing Markdown.
 
 ### Jekyll Header
 
