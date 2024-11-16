@@ -4,10 +4,14 @@ layout: post
 author: bill_wheatley
 date:   2024-10-30 00:00:00 -0500
 tags: 
-  - devops
-  - funding
-  - metrics
-  - value streams
+  - DevOps
+  - Funding
+  - Metrics
+  - Value Streams
+  - Cross Functional Teams
+  - Agile
+  - Tech Debt
+  - Culture
 image:
   thumbnail: /assets/funding-devops-banner.jpg
   path: /assets/funding-devops-banner.jpg

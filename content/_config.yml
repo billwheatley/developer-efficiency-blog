@@ -83,6 +83,9 @@ author:
     - title: GitHub
       url: https://github.com/billwheatley/
       icon: fab fa-github-square
+    - title: Atom Feed
+      url: /atom.xml
+      icon: fab fa-rss-square
 
 footer_links:
   - title: Linkedin
@@ -91,6 +94,9 @@ footer_links:
   - title: GitHub
     url: https://github.com/billwheatley/
     icon: fab fa-github-square
+  - title: Atom Feed
+    url: /atom.xml
+    icon: fa fa-rss-square
 
 # Exclude from processing.
 # The following items will not be processed, by default.
