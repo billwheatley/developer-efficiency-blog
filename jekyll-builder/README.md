@@ -16,7 +16,15 @@ Once this is built you can re-use it as a builder image, until you want to updat
 
 ## Build the Jekyll site with the builder container
 
-Incrementally build the site use
+### First Time
+
+If this is the first time you are going to build the site on this checkout, you need to create the `output` directory:
+
+```console
+mkdir output
+```
+
+### Incrementally build the site use
 
 ``` console
 podman run -t \
