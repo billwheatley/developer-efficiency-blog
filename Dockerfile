@@ -2,7 +2,7 @@
 FROM alpine:latest as builder
 
 RUN apk update && \
-    apk add ruby ruby-dev ruby-rdoc ruby-irb make gcc g++ libc-dev && \
+    apk add ruby ruby-dev ruby-rdoc make gcc g++ libc-dev && \
     gem install bundler
     
 
