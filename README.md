@@ -34,7 +34,7 @@ You can read the entire article [here](https://developerefficiency.com/2024/10/3
 
 DigitalOcean App Platform PAAS is used for the production environment
 
-* DigitalOcean App Platform CD (Continuos Delivery)
+* DigitalOcean App Platform CD (Continuous Delivery)
   * GitOps Methodology to build off GitHub hosted version of this Repo
     * `main` branch is production.
     * Rebuilds on any `main` branch change / push in [Bill Wheatley's developer-efficiency-blog repo](https://github.com/billwheatley/developer-efficiency-blog)
